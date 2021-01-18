@@ -42,17 +42,22 @@ namespace DontTouchMyFlash
         {
             FileSecurity fileS = File.GetAccessControl(filepath);
 
-            IdentityReference sid = fileS.GetOwner(typeof(SecurityIdentifier));
-            string ntAccount = sid.Translate(typeof(NTAccount)).ToString();
-            if(ntAccount == @"NT SERVICE\TrustedInstaller")
-            {
-                SecurityIdentifier cu = WindowsIdentity.GetCurrent().User;
-                fileS.SetOwner(cu);
-                fileS.SetAccessRule(new FileSystemAccessRule(cu, FileSystemRights.FullControl, AccessControlType.Allow));
+            SecurityIdentifier cu = WindowsIdentity.GetCurrent().User;
+            SecurityIdentifier everyone = new SecurityIdentifier(WellKnownSidType.WorldSid, null);
 
-                File.SetAccessControl(filepath, fileS);
-            }
+            fileS.SetOwner(cu);
+            fileS.SetAccessRuleProtection(false, false);
+
+            fileS.RemoveAccessRuleAll(new FileSystemAccessRule(everyone, FileSystemRights.FullControl, AccessControlType.Deny));
+            fileS.RemoveAccessRuleAll(new FileSystemAccessRule(cu, FileSystemRights.FullControl, AccessControlType.Deny));
+
+            fileS.SetAccessRule(new FileSystemAccessRule(everyone, FileSystemRights.FullControl, AccessControlType.Allow));
+            fileS.SetAccessRule(new FileSystemAccessRule(cu, FileSystemRights.FullControl , AccessControlType.Allow));
+
+            File.SetAccessControl(filepath, fileS);
+            File.SetAttributes(filepath, FileAttributes.Normal);
         }
+
         public bool CheckFileAndAdd(string filepath)
         {
             try
