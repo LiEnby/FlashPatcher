@@ -1,8 +1,8 @@
-﻿using DontTouchMyFlash.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Media;
+using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Windows.Forms;
@@ -11,6 +11,7 @@ namespace DontTouchMyFlash
 {
     public partial class FlashPwner : Form
     {
+      
         public FlashPwner()
         {
             InitializeComponent();
@@ -45,17 +46,30 @@ namespace DontTouchMyFlash
             SecurityIdentifier cu = WindowsIdentity.GetCurrent().User;
             SecurityIdentifier everyone = new SecurityIdentifier(WellKnownSidType.WorldSid, null);
 
+            try
+            {
+                Privileges.EnablePrivilege(SecurityEntity.SE_TAKE_OWNERSHIP_NAME);
+            }
+            catch(Exception)
+            {
+                console.AppendText("Failed to get SeTakeOwnershipPrivledge\r\n");
+            }
+
             fileS.SetOwner(cu);
+            File.SetAccessControl(filepath, fileS);
+
+
             fileS.SetAccessRuleProtection(false, false);
 
             fileS.RemoveAccessRuleAll(new FileSystemAccessRule(everyone, FileSystemRights.FullControl, AccessControlType.Deny));
             fileS.RemoveAccessRuleAll(new FileSystemAccessRule(cu, FileSystemRights.FullControl, AccessControlType.Deny));
 
             fileS.SetAccessRule(new FileSystemAccessRule(everyone, FileSystemRights.FullControl, AccessControlType.Allow));
-            fileS.SetAccessRule(new FileSystemAccessRule(cu, FileSystemRights.FullControl , AccessControlType.Allow));
+            fileS.SetAccessRule(new FileSystemAccessRule(cu, FileSystemRights.FullControl, AccessControlType.Allow));
 
             File.SetAccessControl(filepath, fileS);
             File.SetAttributes(filepath, FileAttributes.Normal);
+            
         }
 
         public bool CheckFileAndAdd(string filepath)
@@ -98,11 +112,15 @@ namespace DontTouchMyFlash
             {
                 byte[] fileData = File.ReadAllBytes(filepath);
                 Int64 timestampLocation = GetPositionAfterMatch(fileData, Timestamp);
+                
+                
                 TakeOwn(filepath);
                 FileStream fs = File.OpenWrite(filepath);
                 fs.Seek(timestampLocation, SeekOrigin.Begin);
                 fs.Write(Infintiy, 0x00, Infintiy.Length);
                 fs.Close();
+
+                
                 console.AppendText("Patched: " + Path.GetFileName(filepath) + ".\r\n");
                 flashExes.Items.Remove(filepath);
                 Application.DoEvents();

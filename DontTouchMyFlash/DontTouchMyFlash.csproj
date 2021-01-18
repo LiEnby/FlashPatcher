@@ -58,6 +58,7 @@
     <Compile Include="FlashPwner.Designer.cs">
       <DependentUpon>FlashPwner.cs</DependentUpon>
     </Compile>
+    <Compile Include="Privileges.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FlashPwner.resx">
