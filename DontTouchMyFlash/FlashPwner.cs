@@ -79,7 +79,7 @@ namespace DontTouchMyFlash
                 String[] fileList = Directory.GetFiles(path, "*", SearchOption.AllDirectories);
                 foreach (string file in fileList)
                 {
-                    if (file.EndsWith("*.ocx") || file.EndsWith(".dll") || file.EndsWith(".exe"))
+                    if (file.ToLower().EndsWith(".ocx") || file.ToLower().EndsWith(".dll") || file.ToLower().EndsWith(".exe"))
                     {
                         CheckFileAndAdd(file);
                     }
@@ -120,8 +120,10 @@ namespace DontTouchMyFlash
             flashPath = Path.Combine(windir, "SysWOW64", "Macromed", "Flash");
             ScanFolder(flashPath);
 
-
             flashPath = Path.Combine(localappdata, "Google", "Chrome", "User Data", "PepperFlash");
+            ScanFolder(flashPath);
+
+            flashPath = Path.Combine(localappdata, "Microsoft", "Edge", "User Data", "PepperFlash");
             ScanFolder(flashPath);
         }
         private void FlashPwner_Load(object sender, EventArgs e)
