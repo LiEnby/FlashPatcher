@@ -167,6 +167,7 @@ namespace DontTouchMyFlash
 
         private void defuseBomb_Click(object sender, EventArgs e)
         {
+            defuseBomb.Enabled = false;
             if(flashExes.Items.Count > 0)
             {
                 progressBar.Maximum = flashExes.Items.Count;
@@ -187,7 +188,7 @@ namespace DontTouchMyFlash
             {
                 MessageBox.Show("No files to patch!", "File Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-
+            defuseBomb.Enabled = true;
         }
 
         private void addFile_Click(object sender, EventArgs e)
