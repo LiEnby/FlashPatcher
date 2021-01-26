@@ -106,10 +106,19 @@ namespace DontTouchMyFlash
             }
         }
 
-        public void PatchExe(string filepath)
+        public bool PatchExe(string filepath)
         {
             try
             {
+                Process[] lockingProcesses = FileUtil.WhoIsLocking(filepath).ToArray();
+                foreach(Process proc in lockingProcesses)
+                {
+                    DialogResult res = MessageBox.Show("Flash is currently in use by (" + proc.Id.ToString() + ")" + proc.ProcessName + "\nEnd Process?", "File in use :/", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    if (res == DialogResult.Yes)
+                        proc.Kill(); // DIE HHAHA
+                    else
+                        return true;
+                }
                 byte[] fileData = File.ReadAllBytes(filepath);
                 Int64 timestampLocation = GetPositionAfterMatch(fileData, Timestamp);
                 
@@ -125,10 +134,12 @@ namespace DontTouchMyFlash
                 flashExes.Items.Remove(filepath);
                 Application.DoEvents();
                 progressBar.Increment(1);
+                return false;
             }
             catch(Exception e)
             {
                 MessageBox.Show(e.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
             }
 
         }
@@ -164,11 +175,13 @@ namespace DontTouchMyFlash
                 {
                     copyFlashExes.Add(flashExe);
                 }
+                bool errored = false;
                 foreach (string flashExe in copyFlashExes)
                 {
-                    PatchExe(flashExe);
+                    errored = PatchExe(flashExe);
                 }
-                MessageBox.Show("Patched! Your flash should work again!!!", "SUCCESS", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if(!errored)
+                    MessageBox.Show("Patched! Your flash should work again!!!", "SUCCESS", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -180,18 +193,23 @@ namespace DontTouchMyFlash
         private void addFile_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Title = "PE Executable";
-            ofd.Filter = "PE Executables (*.exe, *.ocx, *.dll)|*.dll;*.exe;*.ocx";
-            ofd.ShowDialog();
-            if (!CheckFileAndAdd(ofd.FileName))
+            ofd.Title = "Flash Executable";
+            ofd.Filter = "PE Executables (*.exe, *.ocx, *.dll)|*.dll;*.exe;*.ocx|ELF Executables (*.so, *.elf, *.dylib)|*.so;*.elf;*.dylib";
+            DialogResult res = ofd.ShowDialog();
+            if(res == DialogResult.OK)
             {
-                MessageBox.Show("File selected does not contain the killswitch timestamp, cannot patch!", "Timestamp Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (!CheckFileAndAdd(ofd.FileName))
+                {
+                    MessageBox.Show("File selected does not contain the killswitch timestamp, cannot patch!", "Timestamp Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
+
         }
 
         private void deleteFile_Click(object sender, EventArgs e)
         {
-            flashExes.Items.RemoveAt(flashExes.SelectedIndex);
+            if(flashExes.SelectedIndex >= 0)
+                flashExes.Items.RemoveAt(flashExes.SelectedIndex);
         }
     }
 }
