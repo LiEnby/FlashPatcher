@@ -211,13 +211,15 @@ namespace DontTouchMyFlash
         {
             byte[] projBytes = File.ReadAllBytes(path);
             byte[] getUrlPattern = new byte[] { 0xF4, 0xE8, 0xBE, 0xFE, 0xFF, 0xFF };
-
+            byte[] nops = new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 };
             Int64 getUrlLocation = GetPositionAfterMatch(projBytes, getUrlPattern);
+
+            if (getUrlLocation == -1)
+                return;
 
             FileStream fs = File.OpenWrite(path);
             fs.Seek(getUrlLocation+1, SeekOrigin.Begin);
-            for (int i = 0; i < 5; i++)
-                fs.WriteByte((byte)0x90); // NOP
+            fs.Write(nops, 0x00, nops.Length);
             fs.Close();
 
         }
