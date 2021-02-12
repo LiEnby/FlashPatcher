@@ -207,10 +207,40 @@ namespace DontTouchMyFlash
 
         }
 
+        private void patchProjetor(string path)
+        {
+            byte[] projBytes = File.ReadAllBytes(path);
+            byte[] getUrlPattern = new byte[] { 0xF4, 0xE8, 0xBE, 0xFE, 0xFF, 0xFF };
+
+            Int64 getUrlLocation = GetPositionAfterMatch(projBytes, getUrlPattern);
+
+            FileStream fs = File.OpenWrite(path);
+            fs.Seek(getUrlLocation+1, SeekOrigin.Begin);
+            for (int i = 0; i < 5; i++)
+                fs.WriteByte((byte)0x90); // NOP
+            fs.Close();
+
+        }
+
         private void deleteFile_Click(object sender, EventArgs e)
         {
             if(flashExes.SelectedIndex >= 0)
                 flashExes.Items.RemoveAt(flashExes.SelectedIndex);
+        }
+
+        private void projectorPatch_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("This is a patch for the standalone \"projector\" program from adobe, it stops it opening your browser whenever a game tries to call javascript with getURL()\n\nNote: the projector DOES NOT HAVE A KILLSWITCH/TIMEBOMB and this is not needed to use the Flash Projector.", "Projector", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Flash Projector";
+            ofd.Filter = "PE Executables (*.exe)|*.exe;|ELF Executables (*.elf)|*.elf";
+            DialogResult res = ofd.ShowDialog();
+            if(res == DialogResult.OK)
+            {
+                patchProjetor(ofd.FileName);
+                MessageBox.Show("Patched! Projector should no longer open the browser!!!", "SUCCESS", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

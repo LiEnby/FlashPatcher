@@ -37,6 +37,7 @@
             this.flashExes = new System.Windows.Forms.ListBox();
             this.deleteFile = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.projectorPatch = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -122,11 +123,23 @@
             this.progressBar.Size = new System.Drawing.Size(459, 23);
             this.progressBar.TabIndex = 9;
             // 
+            // projectorPatch
+            // 
+            this.projectorPatch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.projectorPatch.Location = new System.Drawing.Point(422, 532);
+            this.projectorPatch.Name = "projectorPatch";
+            this.projectorPatch.Size = new System.Drawing.Size(63, 19);
+            this.projectorPatch.TabIndex = 10;
+            this.projectorPatch.Text = "Projector+";
+            this.projectorPatch.UseVisualStyleBackColor = true;
+            this.projectorPatch.Click += new System.EventHandler(this.projectorPatch_Click);
+            // 
             // FlashPwner
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(486, 552);
+            this.Controls.Add(this.projectorPatch);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.deleteFile);
             this.Controls.Add(this.flashExes);
@@ -156,6 +169,7 @@
         private System.Windows.Forms.ListBox flashExes;
         private System.Windows.Forms.Button deleteFile;
         private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.Button projectorPatch;
     }
 }
 
