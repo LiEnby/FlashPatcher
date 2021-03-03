@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace DontTouchMyFlash
+namespace FlashPatcher
 {
     static class Program
     {
@@ -13,7 +13,7 @@ namespace DontTouchMyFlash
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FlashPwner());
+            Application.Run(new FlashPatcherForm());
         }
     }
 }

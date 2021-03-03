@@ -92,74 +92,9 @@ public static class Privileges
     {
         switch (securityEntity)
         {
-            case SecurityEntity.SE_ASSIGNPRIMARYTOKEN_NAME:
-                return "SeAssignPrimaryTokenPrivilege";
-            case SecurityEntity.SE_AUDIT_NAME:
-                return "SeAuditPrivilege";
-            case SecurityEntity.SE_BACKUP_NAME:
-                return "SeBackupPrivilege";
-            case SecurityEntity.SE_CHANGE_NOTIFY_NAME:
-                return "SeChangeNotifyPrivilege";
-            case SecurityEntity.SE_CREATE_GLOBAL_NAME:
-                return "SeCreateGlobalPrivilege";
-            case SecurityEntity.SE_CREATE_PAGEFILE_NAME:
-                return "SeCreatePagefilePrivilege";
-            case SecurityEntity.SE_CREATE_PERMANENT_NAME:
-                return "SeCreatePermanentPrivilege";
-            case SecurityEntity.SE_CREATE_SYMBOLIC_LINK_NAME:
-                return "SeCreateSymbolicLinkPrivilege";
-            case SecurityEntity.SE_CREATE_TOKEN_NAME:
-                return "SeCreateTokenPrivilege";
-            case SecurityEntity.SE_DEBUG_NAME:
-                return "SeDebugPrivilege";
-            case SecurityEntity.SE_ENABLE_DELEGATION_NAME:
-                return "SeEnableDelegationPrivilege";
-            case SecurityEntity.SE_IMPERSONATE_NAME:
-                return "SeImpersonatePrivilege";
-            case SecurityEntity.SE_INC_BASE_PRIORITY_NAME:
-                return "SeIncreaseBasePriorityPrivilege";
-            case SecurityEntity.SE_INCREASE_QUOTA_NAME:
-                return "SeIncreaseQuotaPrivilege";
-            case SecurityEntity.SE_INC_WORKING_SET_NAME:
-                return "SeIncreaseWorkingSetPrivilege";
-            case SecurityEntity.SE_LOAD_DRIVER_NAME:
-                return "SeLoadDriverPrivilege";
-            case SecurityEntity.SE_LOCK_MEMORY_NAME:
-                return "SeLockMemoryPrivilege";
-            case SecurityEntity.SE_MACHINE_ACCOUNT_NAME:
-                return "SeMachineAccountPrivilege";
-            case SecurityEntity.SE_MANAGE_VOLUME_NAME:
-                return "SeManageVolumePrivilege";
-            case SecurityEntity.SE_PROF_SINGLE_PROCESS_NAME:
-                return "SeProfileSingleProcessPrivilege";
-            case SecurityEntity.SE_RELABEL_NAME:
-                return "SeRelabelPrivilege";
-            case SecurityEntity.SE_REMOTE_SHUTDOWN_NAME:
-                return "SeRemoteShutdownPrivilege";
-            case SecurityEntity.SE_RESTORE_NAME:
-                return "SeRestorePrivilege";
-            case SecurityEntity.SE_SECURITY_NAME:
-                return "SeSecurityPrivilege";
-            case SecurityEntity.SE_SHUTDOWN_NAME:
-                return "SeShutdownPrivilege";
-            case SecurityEntity.SE_SYNC_AGENT_NAME:
-                return "SeSyncAgentPrivilege";
-            case SecurityEntity.SE_SYSTEM_ENVIRONMENT_NAME:
-                return "SeSystemEnvironmentPrivilege";
-            case SecurityEntity.SE_SYSTEM_PROFILE_NAME:
-                return "SeSystemProfilePrivilege";
-            case SecurityEntity.SE_SYSTEMTIME_NAME:
-                return "SeSystemtimePrivilege";
             case SecurityEntity.SE_TAKE_OWNERSHIP_NAME:
                 return "SeTakeOwnershipPrivilege";
-            case SecurityEntity.SE_TCB_NAME:
-                return "SeTcbPrivilege";
-            case SecurityEntity.SE_TIME_ZONE_NAME:
-                return "SeTimeZonePrivilege";
-            case SecurityEntity.SE_TRUSTED_CREDMAN_ACCESS_NAME:
-                return "SeTrustedCredManAccessPrivilege";
-            case SecurityEntity.SE_UNDOCK_NAME:
-                return "SeUndockPrivilege";
+
             default:
                 throw new ArgumentOutOfRangeException(typeof(SecurityEntity).Name);
         }
@@ -168,41 +103,7 @@ public static class Privileges
 
 public enum SecurityEntity
 {
-    SE_CREATE_TOKEN_NAME,
-    SE_ASSIGNPRIMARYTOKEN_NAME,
-    SE_LOCK_MEMORY_NAME,
-    SE_INCREASE_QUOTA_NAME,
-    SE_UNSOLICITED_INPUT_NAME,
-    SE_MACHINE_ACCOUNT_NAME,
-    SE_TCB_NAME,
-    SE_SECURITY_NAME,
     SE_TAKE_OWNERSHIP_NAME,
-    SE_LOAD_DRIVER_NAME,
-    SE_SYSTEM_PROFILE_NAME,
-    SE_SYSTEMTIME_NAME,
-    SE_PROF_SINGLE_PROCESS_NAME,
-    SE_INC_BASE_PRIORITY_NAME,
-    SE_CREATE_PAGEFILE_NAME,
-    SE_CREATE_PERMANENT_NAME,
-    SE_BACKUP_NAME,
-    SE_RESTORE_NAME,
-    SE_SHUTDOWN_NAME,
-    SE_DEBUG_NAME,
-    SE_AUDIT_NAME,
-    SE_SYSTEM_ENVIRONMENT_NAME,
-    SE_CHANGE_NOTIFY_NAME,
-    SE_REMOTE_SHUTDOWN_NAME,
-    SE_UNDOCK_NAME,
-    SE_SYNC_AGENT_NAME,
-    SE_ENABLE_DELEGATION_NAME,
-    SE_MANAGE_VOLUME_NAME,
-    SE_IMPERSONATE_NAME,
-    SE_CREATE_GLOBAL_NAME,
-    SE_CREATE_SYMBOLIC_LINK_NAME,
-    SE_INC_WORKING_SET_NAME,
-    SE_RELABEL_NAME,
-    SE_TIME_ZONE_NAME,
-    SE_TRUSTED_CREDMAN_ACCESS_NAME
 }
 
 internal static class NativeMethods

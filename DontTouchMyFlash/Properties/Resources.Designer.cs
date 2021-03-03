@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DontTouchMyFlash.Properties {
+namespace FlashPatcher.Properties {
     using System;
     
     
