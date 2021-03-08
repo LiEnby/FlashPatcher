@@ -142,7 +142,6 @@ namespace FlashPatcher
                 MessageBox.Show(e.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
-            return false;
         }
         public void LocateExes()
         {

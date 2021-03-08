@@ -1,0 +1,9 @@
+C:\Users\User\Documents\FlashPatcher-1.6\FlashPatcher\obj\Release\FlashPatcher.FlashPatcherForm.resources
+C:\Users\User\Documents\FlashPatcher-1.6\FlashPatcher\obj\Release\FlashPatcher.Properties.Resources.resources
+C:\Users\User\Documents\FlashPatcher-1.6\FlashPatcher\obj\Release\FlashPatcher.csproj.GenerateResource.cache
+C:\Users\User\Documents\FlashPatcher-1.6\FlashPatcher\obj\Release\FlashPatcher.csproj.CoreCompileInputs.cache
+C:\Users\User\Documents\FlashPatcher-1.6\FlashPatcher\obj\Release\Flash Patcher.exe
+C:\Users\User\Documents\FlashPatcher-1.6\FlashPatcher\obj\Release\Flash Patcher.pdb
+C:\Users\User\Documents\FlashPatcher-1.6\FlashPatcher\bin\Release\Flash Patcher.exe.config
+C:\Users\User\Documents\FlashPatcher-1.6\FlashPatcher\bin\Release\Flash Patcher.exe
+C:\Users\User\Documents\FlashPatcher-1.6\FlashPatcher\bin\Release\Flash Patcher.pdb

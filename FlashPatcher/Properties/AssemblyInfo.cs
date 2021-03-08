@@ -7,12 +7,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Flash Patcher")]
-[assembly: AssemblyDescription("Enables flash player")]
+[assembly: AssemblyDescription("Removes TimeBomb from Adobe Flash Player")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SilicaAndPina")]
 [assembly: AssemblyProduct("Flash Patcher")]
 [assembly: AssemblyCopyright("Public Domain 2021")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("Flash Patcher")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("ffffffff-ffff-ffff-ffff-ffffffffffff")]
+[assembly: Guid("8c869c7d-98ab-433c-af4e-84cb16e55301")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -33,6 +33,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: NeutralResourcesLanguage("")]
+[assembly: AssemblyVersion("1.7.0.0")]
+[assembly: AssemblyFileVersion("1.7.0.0")]
+[assembly: NeutralResourcesLanguage("en")]
