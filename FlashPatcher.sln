@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlashPatcher", "DontTouchMyFlash\FlashPatcher.csproj", "{E986744D-FB17-40E9-83DC-6043995545D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlashPatcher", "FlashPatcher\FlashPatcher.csproj", "{E986744D-FB17-40E9-83DC-6043995545D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
