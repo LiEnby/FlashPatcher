@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net20;net35;net40;net452;netstandard2.0;netcoreapp2.0;netcoreapp2.1;netcoreapp3.0;netcoreapp3.1;net5.0-windows</TargetFrameworks>
+    <!--<TargetFrameworks>netcoreapp3.1</TargetFrameworks>-->
+    <AssemblyName>Microsoft.Win32.TaskScheduler</AssemblyName>
+    <RootNamespace>Microsoft.Win32.TaskScheduler</RootNamespace>
+    <PackageId>TaskScheduler</PackageId>
+    <Title>Task Scheduler Managed Wrapper (the original Microsoft.Win32.TaskScheduler)</Title>
+    <Description>Provides a single assembly wrapper for the 1.0 and 2.0 versions of Task Scheduler found in all Microsoft operating systems post Windows 98. It simplifies the coding, aggregates the multiple versions and allows for localization support.</Description>
+    <PackageTags>task;interop;windows;taskscheduler;scheduler;.net;task scheduler</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="TaskService.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TaskService.bmp" />
+  </ItemGroup>
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('net2')) Or $(TargetFramework.StartsWith('net3')) Or $(TargetFramework.StartsWith('net4')) ">
+    <Reference Include="System.Drawing" />
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('net45')) ">
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.IO.Compression" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <PackageReference Include="System.Reflection" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
+    <PackageReference Include="System.Security.Permissions" Version="5.0.0" />
+    <PackageReference Include="System.Security.Principal.Windows" Version="5.0.0" />
+    <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' Or $(TargetFramework.StartsWith('netcoreapp')) Or $(TargetFramework.StartsWith('net5')) ">
+    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+    <PackageReference Include="System.Diagnostics.EventLog" Version="5.0.0" />
+    <PackageReference Include="System.Security.AccessControl" Version="5.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

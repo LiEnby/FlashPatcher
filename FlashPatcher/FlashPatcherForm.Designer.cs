@@ -38,6 +38,7 @@
             this.deleteFile = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.projectorPatch = new System.Windows.Forms.Button();
+            this.UninstallNag = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -126,7 +127,7 @@
             // projectorPatch
             // 
             this.projectorPatch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.projectorPatch.Location = new System.Drawing.Point(422, 532);
+            this.projectorPatch.Location = new System.Drawing.Point(410, 528);
             this.projectorPatch.Name = "projectorPatch";
             this.projectorPatch.Size = new System.Drawing.Size(63, 19);
             this.projectorPatch.TabIndex = 10;
@@ -134,11 +135,22 @@
             this.projectorPatch.UseVisualStyleBackColor = true;
             this.projectorPatch.Click += new System.EventHandler(this.projectorPatch_Click);
             // 
+            // UninstallNag
+            // 
+            this.UninstallNag.AutoSize = true;
+            this.UninstallNag.Location = new System.Drawing.Point(229, 530);
+            this.UninstallNag.Name = "UninstallNag";
+            this.UninstallNag.Size = new System.Drawing.Size(178, 17);
+            this.UninstallNag.TabIndex = 11;
+            this.UninstallNag.Text = "\"Uninstall Flash\" Nag Messages";
+            this.UninstallNag.UseVisualStyleBackColor = true;
+            // 
             // FlashPatcherForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(486, 552);
+            this.Controls.Add(this.UninstallNag);
             this.Controls.Add(this.projectorPatch);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.deleteFile);
@@ -170,6 +182,7 @@
         private System.Windows.Forms.Button deleteFile;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Button projectorPatch;
+        private System.Windows.Forms.CheckBox UninstallNag;
     }
 }
 

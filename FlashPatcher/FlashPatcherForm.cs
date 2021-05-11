@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Microsoft.Win32.TaskScheduler;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Security.Principal;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace FlashPatcher
@@ -18,6 +19,14 @@ namespace FlashPatcher
         }
         public byte[] Timestamp = new byte[] { 0x00, 0x00, 0x40, 0x46, 0x3E, 0x6F, 0x77, 0x42 };
         public byte[] Infintiy = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x7F };
+        
+        /// <summary>
+        /// Locates a byte array inside a byte array,
+        /// used for finding the timestamp bytes
+        /// </summary>
+        /// <param name="data">data to search</param>
+        /// <param name="pattern">bytes to find</param>
+        /// <returns>Location of the found bytes, -1 if not found.</returns>
         public Int64 GetPositionAfterMatch(byte[] data, byte[] pattern)
         {
             
@@ -40,7 +49,11 @@ namespace FlashPatcher
             return -1;
             
         }
-
+        /// <summary>
+        /// Uses windows security api's to give program access to the files
+        /// this is required becuase by default the ActiveX controls are owned by TrustedInstaller.
+        /// </summary>
+        /// <param name="filepath">the file to get access to</param>
         public void TakeOwn(string filepath)
         {
             FileSecurity fileS = File.GetAccessControl(filepath);
@@ -73,6 +86,11 @@ namespace FlashPatcher
             File.SetAttributes(filepath, FileAttributes.Normal);
         }
 
+        /// <summary>
+        /// Checks if a given file contains a killswitch timestamp.
+        /// </summary>
+        /// <param name="filepath">File to check.</param>
+        /// <returns></returns>
         public bool CheckFileAndAdd(string filepath)
         {
             try
@@ -92,6 +110,11 @@ namespace FlashPatcher
                 return false;
             }
         }
+
+        /// <summary>
+        /// Scans a folder for flash exectables, (OCX/DLL/EXE)
+        /// </summary>
+        /// <param name="path">Path to the folder</param>
         public void ScanFolder(string path)
         {
             if(Directory.Exists(path))
@@ -107,6 +130,11 @@ namespace FlashPatcher
             }
         }
 
+        /// <summary>
+        /// Patches a given Portable Executable (PE) file
+        /// </summary>
+        /// <param name="filepath">The path to the executable.</param>
+        /// <returns></returns>
         public bool PatchExe(string filepath)
         {
             try
@@ -143,26 +171,50 @@ namespace FlashPatcher
                 return true;
             }
         }
+        /// <summary>
+        /// Locates Portable Executables (PE) files
+        /// of adobe flash player.
+        /// </summary>
         public void LocateExes()
         {
             string windir = Environment.GetEnvironmentVariable("WINDIR");
             string localappdata = Environment.GetEnvironmentVariable("LOCALAPPDATA");
 
-            string flashPath = Path.Combine(windir, "System32", "Macromed", "Flash");
+
+            // Firefox / Internet Explorer
+            
+            string flashPath = Path.Combine(windir, "System32", "Macromed", "Flash"); // Win64 in win64 mode, Win32 in win32 mode
             ScanFolder(flashPath);
 
-            flashPath = Path.Combine(windir, "SysWOW64", "Macromed", "Flash");
+            flashPath = Path.Combine(windir, "Sysnative", "Macromed", "Flash"); // Win64 in win32 mode.
             ScanFolder(flashPath);
 
+            flashPath = Path.Combine(windir, "SysWOW64", "Macromed", "Flash"); // Win32 in win64 mode
+            ScanFolder(flashPath);
+
+            // Chrome (<88)
+            
             flashPath = Path.Combine(localappdata, "Google", "Chrome", "User Data", "PepperFlash");
             ScanFolder(flashPath);
 
+            // Edge
+
             flashPath = Path.Combine(localappdata, "Microsoft", "Edge", "User Data", "PepperFlash");
             ScanFolder(flashPath);
+
+            // Opera
+
+            flashPath = Path.Combine(localappdata, "Microsoft", "Opera Software", "Opera GX Stable", "User Data", "PepperFlash");
+            ScanFolder(flashPath);
+
+            flashPath = Path.Combine(localappdata, "Microsoft", "Opera Software", "Opera Stable", "User Data", "PepperFlash");
+            ScanFolder(flashPath);
+
         }
         private void FlashPwner_Load(object sender, EventArgs e)
         {
             LocateExes();
+            ScheduledTasksCheck();
         }
 
         private void defuseBomb_Click(object sender, EventArgs e)
@@ -243,5 +295,36 @@ namespace FlashPatcher
                 MessageBox.Show("Patched! Projector should no longer open the browser!!!", "SUCCESS", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+        private void ScheduledTasksCheck()
+        {
+            TaskService service = new TaskService();
+            TaskCollection collection = service.RootFolder.GetTasks(new Regex("Adobe Flash Player .* Notifier"));
+            foreach(Task task in collection)
+            {
+                if (task.Enabled)
+                {
+                    UninstallNag.Checked = true;
+                    break;
+                }
+            }
+
+            this.UninstallNag.CheckedChanged += new EventHandler(this.UninstallNag_CheckedChanged);
+        }
+
+        private void UninstallNag_CheckedChanged(object sender, EventArgs e)
+        {
+            TaskService service = new TaskService();
+            TaskCollection collection = service.RootFolder.GetTasks(new Regex("Adobe Flash Player .* Notifier"));
+            foreach (Task task in collection)
+                task.Enabled = UninstallNag.Checked;
+
+            if(!UninstallNag.Checked)
+                MessageBox.Show("\"Please Uninstall Flash\" Nag Messages DISABLED.", "Nag Messages",MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+                MessageBox.Show("\"Please Uninstall Flash\" Nag Messages ENABLED.", "Nag Messages", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        }
+
     }
 }
